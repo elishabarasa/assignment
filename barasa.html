@@ -1,0 +1,31 @@
+<!-- resources/views/signup.blade.php -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <form id="signupForm" action="{{ route('register') }}" method="post">
+        @csrf
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" required minlength="3">
+
+        <!-- Other form fields for Last Name, Email, Password, Confirm Password -->
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script src="{{ asset('js/signup_validation.js') }}"></script>
+</body>
+</html>/ public/js/signup_validation.js
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("signupForm");
+  form.addEventListener("submit", function (event) {
+    if (!validateForm()) {
+      event.preventDefault();
+    }
+  });
+});
+
+function validateForm() {

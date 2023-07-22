@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Registration</title>
+  <style>
+    /* Add your custom CSS styles here to style the form */
+    /* Example: */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+    }
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .success-message {
+      color: green;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: #ffffff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>User Registration</h2>
+    <form id="signupForm" action="/register" method="post">
+      <div class="form-group">
+        <label for="firstName">First Name*</label>
+        <input type="text" id="firstName" name="firstName" required minlength="3">
+        <div class="error-message" id="firstNameError"></div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name*</label>
+        <input type="text" id="lastName" name="lastName" required minlength="3">
+        <div class="error-message" id="lastNameError"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address*</label>
+        <input type="email" id="email" name="email" required>
+        <div class="error-message" id="emailError"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password*</label>
+        <input type="password" id="password" name="password" required minlength="6">
+        <div class="error-message" id="passwordError"></div>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password*</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <div class="error-message" id="confirmPasswordError"></div>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    // Client-side JavaScript validation
+    const form = document.getElementById('signupForm');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Reset error messages
+      document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.textContent = '');
+
+      const firstName = form.firstName.value.trim();
+      const lastName = form.lastName.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      // Check if First Name has at least 3 characters
+      if (firstName.length < 3) {
+        document.getElementById('firstNameError').textContent = 'First Name must have at least 3 characters';
+        return;
+      }
+
+      // Check if Last Name has at least 3 characters
+      if (lastName.length < 3) {
+        document.getElementById('lastNameError').textContent = 'Last Name must have at least 3 characters';
+        return;
+      }
+
+      // Check if Email Address is in a valid format
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById('emailError').textContent = 'Invalid Email Address format';
+        return;
+      }
+
+      // Check if Password has at least 6 characters, including uppercase, lowercase, number, and symbol
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+      if (!passwordPattern.test(password)) {
+        document.getElementById('passwordError').textContent = 'Password must have at least 6 characters, including uppercase, lowercase, number, and symbol';
+        return;
+      }
+
+      // Check if Confirm Password matches Password
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+        return;
+      }
+
+      // Form is valid, submit the form
+      form.submit();
+    });
+  </script>
+</body>
+</html>
